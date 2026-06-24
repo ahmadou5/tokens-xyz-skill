@@ -1,0 +1,26 @@
+{
+  "name": "tokens-xyz-skill",
+  "version": "1.0.0",
+  "description": "> Token intelligence for the [Solana AI Kit](https://github.com/solanabr/solana-ai-kit) — powered by the [Tokens.xyz API v1](https://docs.tokens.xyz/v1/quickstart).",
+  "main": "bin/install.js",
+  "bin": {
+    "install-tokens-xyz-skill": "./bin/install.js"
+  },
+  "files": [
+    "bin/",
+    "skill/",
+    "agents/",
+    "commands/",
+    "rules/"
+  ],
+  "keywords": [
+    "claude-code",
+    "claude",
+    "mcp",
+    "agent-skills",
+    "solana",
+    "tokens-xyz"
+  ],
+  "author": "ahmadou5",
+  "license": "MIT"
+}
