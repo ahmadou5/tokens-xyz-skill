@@ -4,7 +4,7 @@
   "description": "Tokens.xyz Asset Intelligence skill for Claude Code",
   "main": "bin/install.js",
   "bin": {
-    "tokens-xyz-skill": "./bin/install.js"
+    "tokens-xyz-skill": "bin/install.js"
   },
   "type": "module",
   "files": [
