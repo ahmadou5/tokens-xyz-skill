@@ -27,7 +27,7 @@ tokens-xyz-skill/
 ├── CLAUDE.md                         # Root config — tells Claude to load skill/SKILL.md
 ├── README.md                         # This file
 ├── LICENSE                           # MIT
-├── install.sh                        # Interactive installer
+├── package.json
 │
 ├── skill/
 │   ├── SKILL.md                     # Entry point — routing table + setup guide
@@ -86,24 +86,64 @@ key = os.environ["TOKENS_XYZ_API_KEY"]
 
 ## Installation
 
-```bash
-git clone https://github.com/YOUR_GITHUB/tokens-xyz-skill
-cd tokens-xyz-skill
-./install.sh
-```
+### Option 1 — npx (recommended)
 
-The installer:
-
-- Lets you choose personal (`~/.claude/skills/`) or project (`./.claude/skills/`) install
-- Optionally merges `CLAUDE.md` into your existing `~/.claude/CLAUDE.md`
-- Creates a `.env` stub with `TOKENS_XYZ_API_KEY=your_key_here`
-- Adds `.env` entries to `.gitignore` to protect your key
-
-**Non-interactive (CI/scripts):**
+Run the interactive installer without adding a dependency to your project:
 
 ```bash
-./install.sh -y
+npx tokens-xyz-skill
 ```
+
+The installer will:
+
+- Ask whether to install globally (`~/.claude/skills/`) or into the current project (`./.claude/skills/`)
+- Register the skill in your `CLAUDE.md` automatically
+- Create a `.env` stub with `TOKENS_XYZ_API_KEY=your_key_here`
+- Add `.env` entries to `.gitignore` to protect your key
+
+### Option 2 — Install globally via npm
+
+```bash
+npm install -g tokens-xyz-skill
+tokens-xyz-skill
+```
+
+Run `tokens-xyz-skill` once after installing to trigger the setup wizard.
+
+### Option 3 — Into the Solana AI Kit (git submodule)
+
+```bash
+cd your-solana-ai-kit
+git submodule add https://github.com/YOUR_GITHUB/tokens-xyz-skill .claude/skills/tokens-xyz
+```
+
+Then reference it in your root `CLAUDE.md`:
+
+```markdown
+## Skills
+
+- `.claude/skills/tokens-xyz/skill/SKILL.md` — Tokens.xyz asset intelligence
+```
+
+### Non-interactive (CI/scripts)
+
+```bash
+npx tokens-xyz-skill --yes
+```
+
+---
+
+## Manual CLAUDE.md registration
+
+If you skipped the installer or are managing `CLAUDE.md` yourself, add this entry:
+
+```markdown
+## Skills
+
+- `~/.claude/skills/tokens-xyz-skill/skill/SKILL.md` — Tokens.xyz asset intelligence
+```
+
+Adjust the path to match where the skill was installed.
 
 ---
 
@@ -186,7 +226,3 @@ Core endpoints used by this skill:
 ## License
 
 MIT — see [LICENSE](./LICENSE)
-
----
-
-Submission for the [Solana AI Kit skill bounty](https://github.com/solanabr/skill-bounty).
