@@ -2,7 +2,7 @@
 
 > Token intelligence for the [Solana AI Kit](https://github.com/solanabr/solana-ai-kit) — powered by the [Tokens.xyz API v1](https://docs.tokens.xyz/v1/quickstart).
 
-Gives any Claude Code agent canonical token data, risk scores, OHLCV charts, trending mints, and curated asset lists (LSTs, RWAs, tokenized stocks, ETFs) — all resolved through a single, well-maintained API.
+Gives any coding agent canonical token data, risk scores, OHLCV charts, trending mints, and curated asset lists (LSTs, RWAs, tokenized stocks, ETFs) — all resolved through a single, well-maintained API.
 
 ---
 
@@ -94,12 +94,32 @@ Run the interactive installer without adding a dependency to your project:
 npx tokens-xyz-skill
 ```
 
-The installer will:
+The installer will ask which agent you are using:
 
-- Ask whether to install globally (`~/.claude/skills/`) or into the current project (`./.claude/skills/`)
-- Register the skill in your `CLAUDE.md` automatically
+```
+  Which agent are you installing for?
+
+    1) Claude Code
+    2) Codex
+    3) Cursor
+    4) Other / Custom
+```
+
+Based on your choice it will:
+
+- Install skill files to the right directory for your agent
+- Register the skill in the correct config file (`CLAUDE.md`, `AGENTS.md`, or `.cursor/rules/`)
 - Create a `.env` stub with `TOKENS_XYZ_API_KEY=your_key_here`
 - Add `.env` entries to `.gitignore` to protect your key
+
+**Agent config locations:**
+
+| Agent       | Skill files                          | Config file                         |
+| ----------- | ------------------------------------ | ----------------------------------- |
+| Claude Code | `~/.claude/skills/tokens-xyz-skill/` | `~/.claude/CLAUDE.md`               |
+| Codex       | `~/.agents/skills/tokens-xyz-skill/` | `~/.agents/AGENTS.md`               |
+| Cursor      | `.cursor/skills/tokens-xyz-skill/`   | `.cursor/rules/tokens-xyz-skill.md` |
+| Other       | custom path                          | custom filename                     |
 
 ### Option 2 — Install globally via npm
 
@@ -110,11 +130,19 @@ tokens-xyz-skill
 
 Run `tokens-xyz-skill` once after installing to trigger the setup wizard.
 
-### Option 3 — Into the Solana AI Kit (git submodule)
+### Option 3 — Non-interactive (CI / scripts)
+
+Defaults to Claude Code and uses the default install path:
+
+```bash
+npx tokens-xyz-skill --yes
+```
+
+### Option 4 — Into the Solana AI Kit (git submodule)
 
 ```bash
 cd your-solana-ai-kit
-git submodule add https://github.com/YOUR_GITHUB/tokens-xyz-skill .claude/skills/tokens-xyz
+git submodule add https://github.com/ahmadou5/tokens-xyz-skill .claude/skills/tokens-xyz
 ```
 
 Then reference it in your root `CLAUDE.md`:
@@ -125,31 +153,46 @@ Then reference it in your root `CLAUDE.md`:
 - `.claude/skills/tokens-xyz/skill/SKILL.md` — Tokens.xyz asset intelligence
 ```
 
-### Non-interactive (CI/scripts)
-
-```bash
-npx tokens-xyz-skill --yes
-```
-
 ---
 
-## Manual CLAUDE.md registration
+## Manual Registration
 
-If you skipped the installer or are managing `CLAUDE.md` yourself, add this entry:
+If you skipped the installer or are managing your agent config yourself, add the entry point manually.
+
+**Claude Code** — append to `~/.claude/CLAUDE.md`:
 
 ```markdown
-## Skills
+## Tokens.xyz Skill
 
-- `~/.claude/skills/tokens-xyz-skill/skill/SKILL.md` — Tokens.xyz asset intelligence
+Skill for Tokens.xyz asset intelligence.
+Entry point: `~/.claude/skills/tokens-xyz-skill/skill/SKILL.md`
 ```
 
-Adjust the path to match where the skill was installed.
+**Codex** — append to `~/.agents/AGENTS.md`:
+
+```markdown
+## Tokens.xyz Skill
+
+Skill for Tokens.xyz asset intelligence.
+Entry point: `~/.agents/skills/tokens-xyz-skill/skill/SKILL.md`
+```
+
+**Cursor** — create `.cursor/rules/tokens-xyz-skill.md`:
+
+```markdown
+# Tokens.xyz Skill
+
+Skill for Tokens.xyz asset intelligence.
+Entry point: `.cursor/skills/tokens-xyz-skill/skill/SKILL.md`
+```
+
+Adjust paths to match where the skill was installed.
 
 ---
 
 ## Usage Examples
 
-Once installed, Claude Code understands these requests:
+Once installed, your agent understands these requests:
 
 ```
 "What is this mint: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v?"
@@ -180,7 +223,7 @@ Once installed, Claude Code understands these requests:
 
 ## Skill Design: Progressive Loading
 
-The skill is structured so Claude **only loads what it needs**. The entry point (`skill/SKILL.md`) contains a routing table — Claude reads one sub-skill file per task, not all of them. This keeps token usage low and context focused.
+The skill is structured so your agent **only loads what it needs**. The entry point (`skill/SKILL.md`) contains a routing table — the agent reads one sub-skill file per task, not all of them. This keeps token usage low and context focused.
 
 ---
 
@@ -226,3 +269,7 @@ Core endpoints used by this skill:
 ## License
 
 MIT — see [LICENSE](./LICENSE)
+
+---
+
+Submission for the [Solana AI Kit skill bounty](https://github.com/solanabr/skill-bounty).
