@@ -1,6 +1,6 @@
 {
   "name": "tokens-xyz-skill",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tokens.xyz Asset Intelligence skill for Claude Code",
   "main": "bin/install.js",
   "bin": {
