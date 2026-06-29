@@ -1,3 +1,11 @@
+---
+name: skill
+version: 1.0.3
+description: Token intelligence for Solana — canonical asset resolution, risk scoring, OHLCV charts, trending mints, and curated lists (LSTs, RWAs, stocks, ETFs) via the Tokens.xyz API.
+author: ahmadou5
+license: MIT
+---
+
 # Tokens.xyz Asset Intelligence Skill
 
 > Canonical token data, risk scoring, OHLCV charts, market discovery, and curated asset lists for Solana builders — powered by the [Tokens API v1](https://docs.tokens.xyz/v1/quickstart).
